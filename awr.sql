@@ -5,7 +5,7 @@ order by BEGIN_INTERVAL_TIME desc;
 show parameter statistics_level;
 
 
--- awr_settings
+-- awr_settings(Interval, Retention)
 select
    extract( day from snap_interval) *24*60+
    extract( hour from snap_interval) *60+
