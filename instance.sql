@@ -1,0 +1,3 @@
+
+-- check instance name and status
+SELECT INSTANCE_NAME, STATUS, DATABASE_STATUS FROM V$INSTANCE;
