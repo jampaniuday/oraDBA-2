@@ -53,3 +53,10 @@ select * from ALL_USERS;
 
 select * from dba_users;
 
+
+--------------------------------
+-- autotrace
+--------------------------------
+set autotrace traceonly statistics;
+select * from t order by 1,2,3,4;
+set autotrace off;

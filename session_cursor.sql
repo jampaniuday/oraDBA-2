@@ -1,6 +1,9 @@
 -- get session active
 SELECT * FROM V$SESSION WHERE STATUS = 'ACTIVE';
 
+-- get current session SID
+select sid from v$mystat where rownum = 1;
+
 -- get cursor opened by this session
 SELECT * FROM V$OPEN_CURSOR WHERE SID=4007;  -- the id
 
@@ -12,3 +15,4 @@ FROM v$access a, v$session s
 WHERE a.sid = s.sid
 AND a.owner = 'ADMGEMALTO'
 AND a.object = 'TSM_WFE_COMMAND';
+
