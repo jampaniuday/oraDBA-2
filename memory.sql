@@ -27,3 +27,10 @@ show parameters log_buffer
 
 -- shared pool szie
 show parameters shared_pool_size
+
+
+-- displays size information about the SGA, including the sizes of different SGA components
+select * from v$SGAINFO;
+
+-- displays information about the last 800 completed memory resize operations (both automatic and manual).
+select component, parameter, oper_type, oper_mode from v$memory_resize_ops;
