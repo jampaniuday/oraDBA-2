@@ -1,11 +1,30 @@
+----------------------------------------
+-- connection
+----------------------------------------
+-- client process
+select a.spid    dedicated_server, b.process clientpid
+from v$process a, v$session b
+where a.addr = b.paddr
+and   b.sid = sys_context('userenv','sid'); 
+
+
+----------------------------------------
+-- session
+----------------------------------------
+select username, sid, serial#, server, paddr, status
+from v$session
+where username = 'EODA';
+
+select a.username, a.sid, a.serial#, a.server, a.paddr, a.status, b.program
+from v$session a left join v$process b
+on (a.paddr = b.addr)
+where a.username = 'EODA';
+
 -- get session active
 SELECT * FROM V$SESSION WHERE STATUS = 'ACTIVE';
 
 -- get current session SID
 select sid from v$mystat where rownum = 1;
-
--- get cursor opened by this session
-SELECT * FROM V$OPEN_CURSOR WHERE SID=4007;  -- the id
 
 -- determinate who is accessing the table
 SELECT a.object, a.type, a.sid,
@@ -15,6 +34,13 @@ FROM v$access a, v$session s
 WHERE a.sid = s.sid
 AND a.owner = 'ADMGEMALTO'
 AND a.object = 'TSM_WFE_COMMAND';
+
+
+----------------------------------------
+-- cursor
+----------------------------------------
+-- get cursor opened by this session
+SELECT * FROM V$OPEN_CURSOR WHERE SID=4007;  -- the id
 
 ----------------------------------------
 -- cursor sharing
