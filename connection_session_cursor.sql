@@ -35,6 +35,43 @@ WHERE a.sid = s.sid
 AND a.owner = 'ADMGEMALTO'
 AND a.object = 'TSM_WFE_COMMAND';
 
+-- get inactive session more than 2h
+SELECT SID, SERIAL#,MODULE, STATUS
+FROM V$SESSION S
+WHERE S.USERNAME IS NOT NULL
+AND S.LAST_CALL_ET >= 60*60*2
+AND S.STATUS = 'INACTIVE'
+ORDER BY SID DESC;
+
+
+-- kill inactive sessions
+CREATE OR REPLACE PROCEDURE SYS.DB_KILL_IDLE_SESSIONS AUTHID DEFINER AS
+   job_no number;
+   num_of_kills number := 0;
+BEGIN
+    FOR REC IN
+       (SELECT SID, SERIAL#,MODULE, STATUS
+		FROM V$SESSION S
+		WHERE S.USERNAME IS NOT NULL
+		AND S.LAST_CALL_ET >= 60*60*2
+		AND S.STATUS = 'INACTIVE'
+		ORDER BY SID DESC;
+        ) LOOP
+         -- kill inactive sessions immediately
+        DBMS_OUTPUT.PUT('LOCAL SID ' || rec.sid || '(' || rec.module || ')');
+		execute immediate 'alter system kill session ''' || rec.sid || ', ' || rec.serial# || '''immediate' ;
+        
+		-- disconnect inactive sessions immediately
+        -- DBMS_OUTPUT.PUT('LOCAL SID ' || rec.sid || '(' || rec.module || ')');
+		-- execute immediate 'alter system disconnect session ''' || rec.sid || ', ' || rec.serial# || '''immediate' ;
+        
+		DBMS_OUTPUT.PUT_LINE('. killed locally ' || job_no);
+        num_of_kills := num_of_kills + 1;
+    END LOOP;
+    DBMS_OUTPUT.PUT_LINE ('Number of killed xxxx system sessions: ' || num_of_kills);
+END DB_KILL_IDLE_SESSIONS;
+/
+
 
 ----------------------------------------
 -- cursor
