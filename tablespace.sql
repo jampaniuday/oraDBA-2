@@ -5,6 +5,10 @@ DROP TABLESPACE INDX_COMMAND_TSM_WFE INCLUDING CONTENTS AND DATAFILES;
 -- check tablespace datafile
 select tablespace_name, file_name, bytes from dba_data_files where tablespace_name = 'INDX_COMMAND_TSM_WFE';
 
+-- datafile location
+select tablespace_name, file_name, bytes 
+from dba_data_files
+order by tablespace_name;
 
 -- shrink table compact
 alter table ADMGEMALTO.TSM_WFE_COMMAND enable row movement;

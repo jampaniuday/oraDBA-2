@@ -23,6 +23,13 @@ select * from (select owner, segment_name, bytes/1024/1024 M from dba_segments
 				and tablespace_name = 'INDX_COMMAND_TSM_WFE_SSD' order by bytes/1024/1024 desc);
 
 
+-- index/constraints size of index tablespace
+select owner, segment_name, round(bytes/1024/1024/1024,2)
+from dba_segments
+where tablespace_name = 'INDX_COMMAND_TSM_WFE_SSD'
+ORDER BY bytes;
+
+				
 -- add datafile to index
 ALTER TABLESPACE  INDX_COMMAND_TSM_WFE
 ADD DATAFILE '/mnt2/TSMDB/index/INDX_COMMAND_TSM_WFE_3.dbf'
