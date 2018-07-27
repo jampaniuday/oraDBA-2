@@ -19,3 +19,21 @@ Database altered.
 
 SQL> alter database open;
 Database altered.
+
+
+
+-- check current SCN
+select current_scn from v$database;
+
+-- check datafile checkpoint
+select file#, CHECKPOINT_CHANGE#, NAME from v$datafile;
+
+-- trigger a checkpoint
+alter system checkpoint;
+
+-- switch redo log file
+alter system switch logfile;
+
+-- redo log
+select first_time,first_change#,sequence#,status from v$log;
+
