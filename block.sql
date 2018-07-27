@@ -6,3 +6,4 @@ select extent_id, bytes, blocks
 from user_extents
 where segment_name = 'T'
 order by extent_id;
+
