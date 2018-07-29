@@ -37,3 +37,18 @@ alter system switch logfile;
 -- redo log
 select first_time,first_change#,sequence#,status from v$log;
 
+
+-- log history information
+select * from V$LOG_HISTORY;
+
+select * from V$LOGHIST;
+
+
+-- redo log file information
+select * from V$LOG;
+
+select * from V$LOGFILE;
+
+
+-- information about archived logs that are needed to complete media recovery
+select * from V$RECOVERY_LOG;
