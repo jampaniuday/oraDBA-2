@@ -66,3 +66,15 @@ select * from dba_users;
 set autotrace traceonly statistics;
 select * from t order by 1,2,3,4;
 set autotrace off;
+
+
+-- show complete create table definition
+drop table t purge;
+
+create table t
+  ( x int primary key,
+    y date,
+    z clob
+);
+
+select dbms_metadata.get_ddl( 'TABLE', 'T' ) from dual;

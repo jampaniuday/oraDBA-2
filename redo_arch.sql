@@ -91,7 +91,11 @@ LOCAL.SEQUENCE# NOT IN
 THREAD# = LOCAL.THREAD#);
 
 
+-- archive log list
+archive log list
 
+-- Query the v$archive_dest view:
+select dest_name, status, destination from v$archive_dest;  
 
 
 
