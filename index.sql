@@ -37,3 +37,16 @@ SIZE 100M
 AUTOEXTEND 
 ON  NEXT 8192
 MAXSIZE 32767M; 
+
+
+-- make an index invisible:
+ALTER INDEX index_name INVISIBLE;
+
+-- make an index visible:
+ALTER INDEX index_name VISIBLE;
+
+-- Create an invisible index
+create index ti on t(x) INVISIBLE;
+
+-- include invisible indexes at the session level
+alter session set optimizer_use_invisible_indexes = true;
