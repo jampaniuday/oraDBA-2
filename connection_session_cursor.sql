@@ -108,3 +108,8 @@ select sql_text, sql_id, version_count, executions from v$sqlarea where sql_text
 select * from table(dbms_xplan.display_cursor('6c17uf1k9kwkm',0,'advanced'));
 -- sql execution plan
 select sql_text,sql_id, child_number, LAST_LOAD_TIME from v$sql where sql_id='6c17uf1k9kwkm';
+-- show sql by id
+select * from v$sqlarea where sql_id='0krhprzb8xxrk';
+-- operating system pid of specific sql query
+select spid from v$process where addr in 
+(select paddr from v$session where prev_sql_id = '0krhprzb8xxrk');
